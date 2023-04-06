@@ -83,7 +83,8 @@ public class Morpion {
             }
         }
 
-        if(collone == nbLigne-ligne-1 && win){
+        //if(collone == nbLigne-ligne && win){
+        if(collone + ligne == nbLigne-1 && win){
             for(int i=0;i<nbLigne;i++){
                 if (grille[i][nbLigne-i-1] != symbol) {
                     win = false;
@@ -111,7 +112,7 @@ public class Morpion {
             win=this.testVerticale(collone, symbol);
         }
 
-        if(!win && (ligne == collone || collone == nbLigne-ligne)){
+        if(!win && (ligne == collone || collone+ligne == nbLigne-1)){
             win=this.testDiagonale(collone, ligne, symbol);
         }
 
