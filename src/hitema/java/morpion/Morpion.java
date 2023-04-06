@@ -49,72 +49,54 @@ public class Morpion {
         }
     }
 
-    public boolean testHorizontal(int collone, int ligne, char symbol){
-        boolean win=false;
-        if(collone == 0){
-            if(grille[ligne][collone+1] == symbol && grille[ligne][collone+2]== symbol){
-                win = true;
-            }
-        }else if(collone == 1){
-            if(grille[ligne][collone-1] == symbol && grille[ligne][collone+1]== symbol){
-                win = true;
-            }
-        }else if (collone == 2){
-            if(grille[ligne][collone-1] == symbol && grille[ligne][collone-2]== symbol){
-                win = true;
+    public boolean testHorizontal(int ligne, char symbol){
+        boolean win=true;
+        for(int i=0;i<nbLigne;i++){
+            if (grille[ligne][i] != symbol) {
+                win = false;
+                break;
             }
         }
         return win;
     }
 
-    public boolean testVerticale(int collone, int ligne, char symbol){
-        boolean win=false;
-        if (ligne == 0) {
-            if (grille[ligne + 1][collone] == symbol && grille[ligne + 2][collone] == symbol) {
-                win = true;
-            }
-        } else if (ligne == 1) {
-            if (grille[ligne - 1][collone] == symbol && grille[ligne + 1][collone] == symbol) {
-                win = true;
-            }
-        } else if (ligne == 2) {
-            if (grille[ligne - 1][collone] == symbol && grille[ligne - 2][collone] == symbol) {
-                win = true;
+    public boolean testVerticale(int collone, char symbol){
+        boolean win=true;
+        for(int i=0;i<nbLigne;i++){
+            if (grille[i][collone] != symbol) {
+                win = false;
+                break;
             }
         }
         return win;
     }
 
     public boolean testDiagonale(int collone, int ligne, char symbol){
-        boolean win=false;
-        if(ligne == 0 && collone == 0){
-            if(grille[ligne+1][collone+1] == symbol && grille[ligne+2][collone+2] == symbol){
-                win = true;
-            }
-        }else if(ligne == 0 && collone == 2){
-            if(grille[ligne+1][collone-1] == symbol && grille[ligne+2][collone-2] == symbol){
-                win = true;
-            }
-        }else if(ligne == 1 && collone == 1){
-            if(grille[ligne-1][collone-1] == symbol && grille[ligne+1][collone+1] == symbol){
-                win = true;
-            }else if(grille[ligne-1][collone+1] == symbol && grille[ligne+1][collone-1] == symbol){
-                win = true;
-            }
-        }else if(ligne == 2 && collone == 0){
-            if(grille[ligne-1][collone+1] == symbol && grille[ligne-2][collone+2] == symbol){
-                win = true;
-            }
-        }else if(ligne == 2 && collone == 2){
-            if(grille[ligne-1][collone-1] == symbol && grille[ligne-2][collone-2] == symbol){
-                win = true;
+        boolean win=true;
+
+        if(ligne == collone){
+            for(int i=0;i<nbLigne;i++){
+                if (grille[i][i] != symbol) {
+                    win = false;
+                    break;
+                }
             }
         }
+
+        if(collone == nbLigne-ligne-1 && win){
+            for(int i=0;i<nbLigne;i++){
+                if (grille[i][nbLigne-i-1] != symbol) {
+                    win = false;
+                    break;
+                }
+            }
+        }
+
         return win;
     }
 
     public void win(int joueur, int ligne, int collone){
-        boolean win = false;
+        boolean win;
         char symbol;
 
         if(joueur == 1){
@@ -123,13 +105,13 @@ public class Morpion {
             symbol = this.joueur2;
         }
 
-        win=this.testHorizontal(collone, ligne, symbol);
+        win=this.testHorizontal(ligne, symbol);
 
         if(!win) {
-            win=this.testVerticale(collone, ligne, symbol);
+            win=this.testVerticale(collone, symbol);
         }
 
-        if(!win){
+        if(!win && (ligne == collone || collone == nbLigne-ligne)){
             win=this.testDiagonale(collone, ligne, symbol);
         }
 

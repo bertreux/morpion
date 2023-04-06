@@ -65,7 +65,7 @@ public class MenuConsole {
                         System.err.println("Entrez une valeur numérique ");
                         continue;
                     }
-                    if (collone > 3 || collone < 1) {
+                    if (collone > morpion.getNbLigne() || collone < 1) {
                         System.err.println("Entrée une valeur entre 1 et 3 compris");
                     } else {
                         break;
