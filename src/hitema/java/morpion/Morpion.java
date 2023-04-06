@@ -6,20 +6,38 @@ public class Morpion {
     private char[][] grille;
     private char joueur1 = 'O';
     private char joueur2 = 'X';
-    public boolean enCour = true;
+    public boolean enCour;
+
+    public char getJoueur1() {
+        return joueur1;
+    }
 
     public Morpion(int n) {
         this.nbLigne=n;
         this.nbCase=n*n;
         this.grille = new char[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
+        this.reinitialiser();
+    }
+
+    public void reinitialiser(){
+        enCour = true;
+        for (int i = 0; i < nbLigne; i++) {
+            for (int j = 0; j < nbLigne; j++) {
                 grille[i][j] = ' ';
             }
         }
     }
 
-    public void afficherPlateau(){
+    public void setJoueur(char joueur1, int joueur) {
+        if(joueur == 1){
+            this.joueur1 = joueur1;
+        }else {
+            this.joueur2 = joueur2;
+        }
+
+    }
+
+    public void viewGrille(){
         System.out.print(" |");
         String lseparator = "-".repeat(2*nbLigne+2);
         for(int a=0;a<nbLigne;a++){
@@ -36,7 +54,7 @@ public class Morpion {
         }
     }
 
-    public int jouer(int joueur, int ligne, int collone){
+    public int play(int joueur, int ligne, int collone){
         if(grille[ligne][collone] == ' '){
             if(joueur == 1){
                 grille[ligne][collone] = this.joueur1;
@@ -83,7 +101,6 @@ public class Morpion {
             }
         }
 
-        //if(collone == nbLigne-ligne && win){
         if(collone + ligne == nbLigne-1 && win){
             for(int i=0;i<nbLigne;i++){
                 if (grille[i][nbLigne-i-1] != symbol) {
@@ -118,15 +135,6 @@ public class Morpion {
 
         if (win){
             this.enCour = false;
-        }
-    }
-
-    public void reinitialiser(){
-        enCour = true;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                grille[i][j] = ' ';
-            }
         }
     }
 
